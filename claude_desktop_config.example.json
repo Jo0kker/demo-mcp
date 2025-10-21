@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "demo-faq": {
+      "command": "php",
+      "args": [
+        "/Users/benjamin-roma-sacconney/projects/demo-mcp/artisan",
+        "mcp:start",
+        "faq"
+      ],
+      "env": {
+        "APP_ENV": "local"
+      }
+    }
+  }
+}
