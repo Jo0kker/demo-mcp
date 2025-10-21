@@ -6,8 +6,8 @@
 /public/storage
 /storage/*.key
 /storage/pail
-/resources/js/actions
-/resources/js/routes
+# /resources/js/actions  # Commenté pour permettre le commit des actions générées pour la production
+# /resources/js/routes  # Commenté pour permettre le commit des routes générées pour la production
 /resources/js/wayfinder
 /vendor
 .DS_Store
