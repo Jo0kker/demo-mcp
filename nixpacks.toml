@@ -9,18 +9,10 @@ nixPkgs = [
   '(lib.recursiveUpdate php84Packages.composer { meta.priority = php84Packages.composer.meta.priority or 0 -1; })'
 ]
 
-[phases.install]
-cmds = [
-    'composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist',
-    'yarn install --frozen-lockfile'
-]
-
 [phases.build]
 cmds = [
-    'yarn build',
-    'php artisan config:cache',
-    'php artisan route:cache',
-    'php artisan view:cache'
+    # Build des assets frontend avec Vite
+    "yarn build"
 ]
 
 [start]
