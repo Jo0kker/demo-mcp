@@ -8,7 +8,7 @@
 /storage/pail
 # /resources/js/actions  # Commenté pour permettre le commit des actions générées pour la production
 # /resources/js/routes  # Commenté pour permettre le commit des routes générées pour la production
-/resources/js/wayfinder
+# /resources/js/wayfinder  # Commenté pour permettre le commit du wayfinder généré pour la production
 /vendor
 .DS_Store
 .env
