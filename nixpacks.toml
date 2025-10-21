@@ -1,8 +1,7 @@
 # Configuration Nixpacks pour Laravel 12 avec Inertia/Vue
 
 [phases.setup]
-nixPkgs = ['php84', 'nodejs_22']
-aptPkgs = []
+nixPkgs = ['php84', 'php84Packages.composer', 'nodejs_22', 'yarn']
 
 [phases.install]
 cmds = [
