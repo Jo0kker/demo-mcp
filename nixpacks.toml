@@ -1,7 +1,13 @@
 # Configuration Nixpacks pour Laravel 12 avec Inertia/Vue
+# Solution au conflit yarn/composer via la priorité des packages
 
 [phases.setup]
-nixPkgs = ['php84', 'php84Packages.composer', 'nodejs-22_x', 'yarn']
+nixPkgs = [
+  "...",
+  # Solution au conflit LICENSE entre yarn et composer
+  # On baisse la priorité de composer pour éviter le conflit
+  '(lib.recursiveUpdate php84Packages.composer { meta.priority = php84Packages.composer.meta.priority or 0 -1; })'
+]
 
 [phases.install]
 cmds = [
