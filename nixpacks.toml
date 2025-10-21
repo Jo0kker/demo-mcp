@@ -1,0 +1,22 @@
+# Configuration Nixpacks pour Laravel 12 avec Inertia/Vue
+
+[phases.setup]
+nixPkgs = ['php84', 'nodejs_22']
+aptPkgs = []
+
+[phases.install]
+cmds = [
+    'composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist',
+    'yarn install --frozen-lockfile'
+]
+
+[phases.build]
+cmds = [
+    'yarn build',
+    'php artisan config:cache',
+    'php artisan route:cache',
+    'php artisan view:cache'
+]
+
+[start]
+cmd = 'php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
