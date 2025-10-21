@@ -14,6 +14,9 @@ export default defineConfig({
         tailwindcss(),
         wayfinder({
             formVariants: true,
+            // Désactiver la génération automatique pendant le build de production
+            // pour éviter les erreurs quand Laravel n'est pas encore configuré
+            generate: process.env.NODE_ENV !== 'production',
         }),
         vue({
             template: {
