@@ -9,12 +9,18 @@ use Laravel\Mcp\Facades\Mcp;
 Mcp::oauthRoutes();
 
 // Alias oauth2 -> oauth pour compatibilité avec GPT et autres clients
+// Forward au lieu de redirect pour éviter l'erreur "unsafe URL"
 Route::get('/oauth2/authorize', function () {
-    return redirect('/oauth/authorize?' . http_build_query(request()->all()));
+    request()->merge(request()->query());
+    return app()->handle(
+        request()->create('/oauth/authorize', 'GET', request()->all())
+    );
 })->name('oauth2.authorize');
 
 Route::post('/oauth2/token', function () {
-    return redirect('/oauth/token');
+    return app()->handle(
+        request()->create('/oauth/token', 'POST', request()->all())
+    );
 })->name('oauth2.token');
 
 // Serveur MCP local pour développement (accessible via artisan)
