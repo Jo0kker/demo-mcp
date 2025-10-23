@@ -33,10 +33,7 @@ class CreateFaqTool extends Tool
      */
     public function shouldRegister(): bool
     {
-        // TEMPORAIRE : Retourne true pour permettre les tests locaux
-        // En production, décommenter la ligne ci-dessous :
-        // return Auth::check();
-        return true;
+        return Auth::check();
     }
 
     /**
