@@ -33,7 +33,13 @@ class CreateFaqTool extends Tool
      */
     public function shouldRegister(): bool
     {
-        return Auth::check();
+        // Vérifier si un token Bearer est présent dans la requête
+        $hasToken = request()->bearerToken() !== null;
+
+        // Le tool est visible si :
+        // - L'utilisateur est authentifié via session (Auth::check())
+        // - OU un token Bearer OAuth est présent
+        return Auth::check() || $hasToken;
     }
 
     /**
