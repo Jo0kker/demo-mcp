@@ -36,6 +36,14 @@ class CreateFaqTool extends Tool
         // Vérifier si un token Bearer est présent dans la requête
         $hasToken = request()->bearerToken() !== null;
 
+        // DEBUG: Logger les infos d'auth
+        \Illuminate\Support\Facades\Log::info('CreateFaqTool shouldRegister', [
+            'auth_check' => Auth::check(),
+            'has_bearer_token' => $hasToken,
+            'bearer_token' => request()->bearerToken() ? substr(request()->bearerToken(), 0, 20) . '...' : null,
+            'headers' => request()->headers->all(),
+        ]);
+
         // Le tool est visible si :
         // - L'utilisateur est authentifié via session (Auth::check())
         // - OU un token Bearer OAuth est présent
