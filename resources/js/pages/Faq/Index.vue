@@ -56,9 +56,18 @@ const clearFilters = () => {
           <h1 class="text-4xl font-bold text-gray-900 mb-4">
             Centre d'aide
           </h1>
-          <p class="text-xl text-gray-600">
+          <p class="text-xl text-gray-600 mb-6">
             Trouvez rapidement des réponses à vos questions
           </p>
+          <Link
+            href="/faqs/create"
+            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Créer une FAQ
+          </Link>
         </div>
 
         <!-- Filtres -->
