@@ -67,9 +67,11 @@ class SearchFaqsTool extends Tool
     {
         return [
             'query' => $schema->string()
-                ->description('Le texte à rechercher dans les questions et réponses'),
+                ->description('Le texte à rechercher dans les questions et réponses (optionnel, laissez vide pour tout afficher)')
+                ->default(''),
             'category' => $schema->string()
-                ->description('Filtrer par catégorie (optionnel)'),
+                ->description('Filtrer par catégorie (optionnel)')
+                ->default(''),
             'limit' => $schema->integer()
                 ->description('Nombre maximum de résultats (défaut: 10)')
                 ->default(10),
