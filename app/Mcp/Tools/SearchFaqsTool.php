@@ -87,7 +87,7 @@ class SearchFaqsTool extends Tool
             'category' => $schema->string()
                 ->description('Filtrer par catégorie (optionnel)')
                 ->default(''),
-            'limit' => $schema->integer()
+            'limit' => $schema->number()
                 ->description('Nombre maximum de résultats (défaut: 10)')
                 ->default(10),
         ];
