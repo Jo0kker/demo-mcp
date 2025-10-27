@@ -20,6 +20,21 @@ class SearchFaqsTool extends Tool
     MARKDOWN;
 
     /**
+     * Override to add required field for n8n compatibility.
+     */
+    public function toArray(): array
+    {
+        $array = parent::toArray();
+
+        // Ensure required field exists for n8n compatibility
+        if (isset($array['inputSchema']) && isset($array['inputSchema']['properties'])) {
+            $array['inputSchema']['required'] = [];
+        }
+
+        return $array;
+    }
+
+    /**
      * Handle the tool request.
      */
     public function handle(Request $request): Response
