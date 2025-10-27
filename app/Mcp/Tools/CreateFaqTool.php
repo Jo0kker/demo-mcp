@@ -33,21 +33,9 @@ class CreateFaqTool extends Tool
      */
     public function shouldRegister(): bool
     {
-        // Vérifier si un token Bearer est présent dans la requête
-        $hasToken = request()->bearerToken() !== null;
-
-        // DEBUG: Logger les infos d'auth
-        \Illuminate\Support\Facades\Log::info('CreateFaqTool shouldRegister', [
-            'auth_check' => Auth::check(),
-            'has_bearer_token' => $hasToken,
-            'bearer_token' => request()->bearerToken() ? substr(request()->bearerToken(), 0, 20) . '...' : null,
-            'headers' => request()->headers->all(),
-        ]);
-
-        // Le tool est visible si :
-        // - L'utilisateur est authentifié via session (Auth::check())
-        // - OU un token Bearer OAuth est présent
-        return Auth::check() || $hasToken;
+        // Toujours afficher le tool pour que les clients MCP sachent qu'il existe
+        // L'authentification sera vérifiée lors de l'appel dans handle()
+        return true;
     }
 
     /**
@@ -55,6 +43,18 @@ class CreateFaqTool extends Tool
      */
     public function handle(Request $request): Response
     {
+        // Vérifier l'authentification (Session, Sanctum ou Passport)
+        $authenticated = Auth::check()
+            || Auth::guard('sanctum')->check()
+            || Auth::guard('api')->check();
+
+        if (!$authenticated) {
+            return Response::error(
+                '🔒 Authentication required: This tool requires authentication. Use OAuth or provide a Personal Access Token.',
+                'AUTHENTICATION_REQUIRED'
+            );
+        }
+
         // Validation des données
         $validator = Validator::make($request->all(), [
             'question' => 'required|string|max:255',

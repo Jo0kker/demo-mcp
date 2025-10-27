@@ -15,15 +15,17 @@ defineProps<Props>();
 <template>
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 40 42"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
         :class="className"
         v-bind="$attrs"
     >
-        <path
-            fill="currentColor"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M17.2 5.633 8.6.855 0 5.633v26.51l16.2 9 16.2-9v-8.442l7.6-4.223V9.856l-8.6-4.777-8.6 4.777V18.3l-5.6 3.111V5.633ZM38 18.301l-5.6 3.11v-6.157l5.6-3.11V18.3Zm-1.06-7.856-5.54 3.078-5.54-3.079 5.54-3.078 5.54 3.079ZM24.8 18.3v-6.157l5.6 3.111v6.158L24.8 18.3Zm-1 1.732 5.54 3.078-13.14 7.302-5.54-3.078 13.14-7.3v-.002Zm-16.2 7.89 7.6 4.222V38.3L2 30.966V7.92l5.6 3.111v16.892ZM8.6 9.3 3.06 6.222 8.6 3.143l5.54 3.08L8.6 9.3Zm21.8 15.51-13.2 7.334V38.3l13.2-7.334v-6.156ZM9.6 11.034l5.6-3.11v14.6l-5.6 3.11v-14.6Z"
-        />
+        <!-- Headset support icon -->
+        <path d="M3 11c0-3.87 3.13-7 7-7h4c3.87 0 7 3.13 7 7v6c0 1.1-.9 2-2 2h-2c-1.1 0-2-.9-2-2v-2c0-1.1.9-2 2-2h2V11c0-2.76-2.24-5-5-5h-4C7.24 6 5 8.24 5 11v2h2c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-6z"/>
+        <path d="M19 16v2a2 2 0 0 1-2 2h-1"/>
     </svg>
 </template>

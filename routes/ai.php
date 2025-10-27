@@ -33,9 +33,10 @@ Mcp::local('faq', FaqServer::class);
 // - Tool create_faq masqué (shouldRegister() retourne false)
 Mcp::web('/mcp/faq', FaqServer::class);
 
-// Serveur MCP web PROTÉGÉ (avec OAuth 2.1)
-// - Nécessite authentification OAuth
+// Serveur MCP web PROTÉGÉ (avec OAuth 2.1 ou Personal Access Token)
+// - Nécessite authentification OAuth (Passport) ou Personal Access Token (Sanctum)
 // - Tous les tools disponibles (y compris create_faq)
-// - Configuration: php artisan mcp:setup-oauth
+// - Configuration OAuth: php artisan mcp:setup-oauth
+// - Token personnel: depuis l'interface web dans Settings > API Tokens
 Mcp::web('/mcp/faq/admin', FaqServer::class)
-    ->middleware(['auth:api']);
+    ->middleware(['auth:sanctum,api']);

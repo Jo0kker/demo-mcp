@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Head, Link, router, usePage } from '@inertiajs/vue3'
 import { ref, computed } from 'vue'
+
+const page = usePage()
 
 interface Faq {
   id: number
@@ -50,6 +52,36 @@ const clearFilters = () => {
     <Head title="FAQ - Centre d'aide" />
 
     <div class="min-h-screen bg-gray-50">
+      <!-- Top Bar with Auth -->
+      <div class="border-b border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div class="flex justify-end items-center gap-3">
+            <template v-if="page.props.auth?.user">
+              <Link
+                href="/dashboard"
+                class="text-sm text-gray-600 hover:text-gray-900"
+              >
+                Dashboard
+              </Link>
+            </template>
+            <template v-else>
+              <Link
+                href="/login"
+                class="text-sm text-gray-600 hover:text-gray-900"
+              >
+                Se connecter
+              </Link>
+              <Link
+                href="/register"
+                class="text-sm px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+              >
+                S'inscrire
+              </Link>
+            </template>
+          </div>
+        </div>
+      </div>
+
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Header -->
         <div class="text-center mb-12">
