@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,17 +14,35 @@ Route::get('/', function () {
 Route::get('/faqs', [FaqController::class, 'index'])->name('faqs.index');
 Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faqs.show');
 
-// Routes FAQ protégées (nécessite authentification)
+// Routes Dashboard protégées
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/faqs/create', [FaqController::class, 'create'])->name('faqs.create');
-    Route::post('/faqs', [FaqController::class, 'store'])->name('faqs.store');
-    Route::get('/faqs/{faq}/edit', [FaqController::class, 'edit'])->name('faqs.edit');
-    Route::put('/faqs/{faq}', [FaqController::class, 'update'])->name('faqs.update');
-    Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])->name('faqs.destroy');
-});
+    Route::get('dashboard', function () {
+        $totalFaqs = \App\Models\Faq::count();
+        $publishedFaqs = \App\Models\Faq::published()->count();
+        $totalViews = \App\Models\Faq::sum('view_count');
+        $recentFaqs = \App\Models\Faq::orderBy('created_at', 'desc')->limit(5)->get();
+        $topFaqs = \App\Models\Faq::published()->orderBy('view_count', 'desc')->limit(5)->get();
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+        return Inertia::render('Dashboard', [
+            'stats' => [
+                'totalFaqs' => $totalFaqs,
+                'publishedFaqs' => $publishedFaqs,
+                'totalViews' => $totalViews,
+            ],
+            'recentFaqs' => $recentFaqs,
+            'topFaqs' => $topFaqs,
+        ]);
+    })->name('dashboard');
+
+    // Admin FAQs
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/faqs', [AdminFaqController::class, 'index'])->name('faqs.index');
+        Route::get('/faqs/create', [AdminFaqController::class, 'create'])->name('faqs.create');
+        Route::post('/faqs', [AdminFaqController::class, 'store'])->name('faqs.store');
+        Route::get('/faqs/{faq}/edit', [AdminFaqController::class, 'edit'])->name('faqs.edit');
+        Route::put('/faqs/{faq}', [AdminFaqController::class, 'update'])->name('faqs.update');
+        Route::delete('/faqs/{faq}', [AdminFaqController::class, 'destroy'])->name('faqs.destroy');
+    });
+});
 
 require __DIR__.'/settings.php';

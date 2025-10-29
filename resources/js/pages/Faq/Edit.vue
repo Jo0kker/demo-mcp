@@ -1,31 +1,41 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3'
 
+interface Faq {
+  id: number
+  question: string
+  answer: string
+  category: string | null
+  is_published: boolean
+}
+
 interface Props {
-  categories: string[]
+  faq: Faq
 }
 
 const props = defineProps<Props>()
 
 const form = useForm({
-  question: '',
-  answer: '',
-  category: '',
-  is_published: true,
+  question: props.faq.question,
+  answer: props.faq.answer,
+  category: props.faq.category || '',
+  is_published: props.faq.is_published,
 })
 
 const submit = () => {
-  form.post('/faqs', {
-    onSuccess: () => {
-      form.reset()
-    },
-  })
+  form.put(`/faqs/${props.faq.id}`)
+}
+
+const deleteFaq = () => {
+  if (confirm('Êtes-vous sûr de vouloir supprimer cette FAQ ?')) {
+    form.delete(`/faqs/${props.faq.id}`)
+  }
 }
 </script>
 
 <template>
   <div>
-    <Head title="Créer une FAQ" />
+    <Head title="Éditer une FAQ" />
 
     <div class="min-h-screen bg-gray-50">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -41,7 +51,7 @@ const submit = () => {
             Retour à la liste
           </Link>
           <h1 class="text-3xl font-bold text-gray-900 mt-4">
-            Créer une nouvelle FAQ
+            Éditer la FAQ
           </h1>
         </div>
 
@@ -92,7 +102,6 @@ const submit = () => {
                 Catégorie
               </label>
               <input
-                v-if="categories.length === 0"
                 id="category"
                 v-model="form.category"
                 type="text"
@@ -100,27 +109,6 @@ const submit = () => {
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 :class="{ 'border-red-500': form.errors.category }"
               >
-              <select
-                v-else
-                id="category"
-                v-model="form.category"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                :class="{ 'border-red-500': form.errors.category }"
-              >
-                <option value="">
-                  Sélectionner ou laisser vide pour une nouvelle catégorie
-                </option>
-                <option
-                  v-for="cat in categories"
-                  :key="cat"
-                  :value="cat"
-                >
-                  {{ cat }}
-                </option>
-              </select>
-              <p class="mt-1 text-xs text-gray-500">
-                Sélectionnez une catégorie existante ou laissez vide pour en créer une nouvelle
-              </p>
               <p v-if="form.errors.category" class="mt-1 text-sm text-red-600">
                 {{ form.errors.category }}
               </p>
@@ -140,21 +128,31 @@ const submit = () => {
             </div>
 
             <!-- Actions -->
-            <div class="flex items-center gap-3 pt-4">
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200">
               <button
-                type="submit"
-                :disabled="form.processing"
-                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                type="button"
+                @click="deleteFaq"
+                class="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
               >
-                <span v-if="!form.processing">Créer la FAQ</span>
-                <span v-else>Création en cours...</span>
+                Supprimer
               </button>
-              <Link
-                href="/faqs"
-                class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-              >
-                Annuler
-              </Link>
+
+              <div class="flex items-center gap-3">
+                <Link
+                  href="/faqs"
+                  class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                >
+                  Annuler
+                </Link>
+                <button
+                  type="submit"
+                  :disabled="form.processing"
+                  class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span v-if="!form.processing">Mettre à jour</span>
+                  <span v-else>Mise à jour...</span>
+                </button>
+              </div>
             </div>
 
             <!-- Success message -->
@@ -163,7 +161,7 @@ const submit = () => {
               class="rounded-md bg-green-50 p-4"
             >
               <p class="text-sm text-green-800">
-                ✓ FAQ créée avec succès !
+                ✓ FAQ mise à jour avec succès !
               </p>
             </div>
           </form>

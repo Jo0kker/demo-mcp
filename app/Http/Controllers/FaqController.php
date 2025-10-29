@@ -60,7 +60,11 @@ class FaqController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Faq/Create');
+        $categories = Faq::distinct()->pluck('category')->filter()->sort()->values();
+
+        return Inertia::render('Faq/Create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
