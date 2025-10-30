@@ -2,6 +2,16 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Prompts\AnalyzeKnowledgeBasePrompt;
+use App\Mcp\Prompts\CategorySummaryPrompt;
+use App\Mcp\Prompts\HelpUserPrompt;
+use App\Mcp\Prompts\SuggestFaqPrompt;
+use App\Mcp\Resources\FaqByIdResource;
+use App\Mcp\Resources\FaqCategoryResource;
+use App\Mcp\Resources\FaqCompactResource;
+use App\Mcp\Resources\FaqCsvResource;
+use App\Mcp\Resources\FaqHtmlResource;
+use App\Mcp\Resources\FaqJsonResource;
 use App\Mcp\Resources\FaqListResource;
 use App\Mcp\Tools\CreateFaqTool;
 use App\Mcp\Tools\GetFaqCategoriesTool;
@@ -34,14 +44,29 @@ class FaqServer extends Server
         - **create_faq** : Créer une nouvelle FAQ dans la base de connaissances
 
         ### Ressources (Resources)
-        - **faqs://all** : Accès à la liste complète de toutes les FAQs
+        **Ressources statiques :**
+        - **faqs://all** : Liste complète en Markdown (format détaillé)
+        - **faqs://json** : Export JSON structuré (pour API/intégrations)
+        - **faqs://html** : Page HTML prête à afficher (avec styles CSS)
+        - **faqs://csv** : Export CSV (Excel/Google Sheets compatible)
+        - **faqs://compact** : Format texte condensé (optimisé pour LLM)
+
+        **Ressources dynamiques (templates) :**
+        - **faqs://category/{category}** : FAQs d'une catégorie spécifique (ex: faqs://category/Technique)
+        - **faqs://id/{id}** : Une FAQ spécifique par son ID (ex: faqs://id/42)
+
+        ### Prompts (Modèles pré-définis)
+        - **help_user** : Guide pour aider un utilisateur avec sa question
+        - **category_summary** : Génère un résumé complet d'une catégorie
+        - **suggest_faq** : Suggère de nouvelles FAQs sur un sujet
+        - **analyze_knowledge_base** : Analyse complète de la base de connaissances
 
         ## Comment utiliser ce serveur :
 
-        1. Pour aider un utilisateur, commencez par rechercher dans les FAQs avec l'outil `search_faqs`
-        2. Vous pouvez filtrer par catégorie si nécessaire
-        3. La ressource `faqs://all` vous donne une vue d'ensemble de toute la base de connaissances
-        4. Fournissez des réponses claires basées sur les informations trouvées
+        1. **Pour aider un utilisateur** : Utilisez le prompt `help_user` ou l'outil `search_faqs`
+        2. **Pour explorer une catégorie** : Utilisez le prompt `category_summary`
+        3. **Pour enrichir la base** : Utilisez le prompt `suggest_faq`
+        4. **Pour un audit complet** : Utilisez le prompt `analyze_knowledge_base`
 
         ## Catégories typiques :
         - Technique
@@ -68,7 +93,16 @@ class FaqServer extends Server
      * @var array<int, class-string<\Laravel\Mcp\Server\Resource>>
      */
     protected array $resources = [
-        FaqListResource::class,
+        // Resources statiques
+        FaqListResource::class,      // faqs://all - Markdown complet
+        FaqJsonResource::class,      // faqs://json - JSON structuré
+        FaqHtmlResource::class,      // faqs://html - HTML formaté
+        FaqCsvResource::class,       // faqs://csv - Export CSV
+        FaqCompactResource::class,   // faqs://compact - Format condensé
+
+        // Resource templates (avec paramètres dynamiques)
+        FaqCategoryResource::class,  // faqs://category/{category} - FAQs par catégorie
+        FaqByIdResource::class,      // faqs://id/{id} - FAQ spécifique
     ];
 
     /**
@@ -77,6 +111,9 @@ class FaqServer extends Server
      * @var array<int, class-string<\Laravel\Mcp\Server\Prompt>>
      */
     protected array $prompts = [
-        //
+        HelpUserPrompt::class,
+        CategorySummaryPrompt::class,
+        SuggestFaqPrompt::class,
+        AnalyzeKnowledgeBasePrompt::class,
     ];
 }
