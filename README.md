@@ -45,10 +45,10 @@ php artisan migrate:fresh --seed
 
 ```bash
 # En développement
-npm run dev
+yarn dev
 
 # Pour la production
-npm run build
+yarn build
 ```
 
 ## 🧪 Tester le serveur MCP
