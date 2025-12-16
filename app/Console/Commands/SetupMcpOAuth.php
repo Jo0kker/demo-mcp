@@ -52,10 +52,10 @@ class SetupMcpOAuth extends Command
         // Créer le client directement avec le secret plaintext
         $client = new Client();
         $client->name = 'MCP OAuth Client';
-        $client->secret = password_hash($plaintextSecret, PASSWORD_BCRYPT);
+        $client->secret = $plaintextSecret; // Passport hash automatiquement via l'accessor
         $client->provider = 'users';
-        $client->redirect_uris = json_encode([config('app.url')]);
-        $client->grant_types = json_encode(['password', 'refresh_token']);
+        $client->redirect_uris = [config('app.url')]; // Ne pas json_encode, le cast array le fait
+        $client->grant_types = ['password', 'refresh_token', 'authorization_code']; // Ne pas json_encode
         $client->revoked = false;
         $client->save();
 
