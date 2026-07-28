@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Faq;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Faq>
+ * @extends Factory<Faq>
  */
 class FaqFactory extends Factory
 {
@@ -19,7 +20,7 @@ class FaqFactory extends Factory
         $categories = ['Technique', 'Facturation', 'Compte', 'Général', 'Sécurité'];
 
         return [
-            'question' => fake()->sentence() . '?',
+            'question' => fake()->sentence().'?',
             'answer' => fake()->paragraph(3),
             'category' => fake()->randomElement($categories),
             'is_published' => fake()->boolean(90),

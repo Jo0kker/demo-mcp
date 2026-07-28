@@ -20,8 +20,8 @@ Cette commande va :
 
 Exemple de sortie :
 ```
-Client ID ............................. 019a06c1-8fa6-7106-a400-d01da14776d6
-Client Secret ..................... pQ4C4HiGvtVWESR9MZfRz7RLJHdTmaOYJ5QQvi61
+Client ID ............................. VOTRE_CLIENT_ID
+Client Secret ......................... VOTRE_CLIENT_SECRET
 ```
 
 **Le secret à utiliser est** : `pQ4C4HiGvtVWESR9MZfRz7RLJHdTmaOYJ5QQvi61`
@@ -37,13 +37,13 @@ La commande affiche automatiquement la config JSON complète :
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-http",
-        "http://localhost:8000/mcp/faq/admin"
+        "http://localhost:8000/mcp/faq"
       ],
       "oauth": {
         "authorizationUrl": "http://localhost:8000/oauth/authorize",
         "tokenUrl": "http://localhost:8000/oauth/token",
         "clientId": "019a06c1-8fa6-7106-a400-d01da14776d6",
-        "clientSecret": "pQ4C4HiGvtVWESR9MZfRz7RLJHdTmaOYJ5QQvi61",
+        "clientSecret": "VOTRE_CLIENT_SECRET",
         "scopes": ["*"]
       }
     }
@@ -115,13 +115,13 @@ MCP_OAUTH_CLIENT_SECRET=le_secret_hashé
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-http",
-        "https://votre-domaine.com/mcp/faq/admin"
+        "https://votre-domaine.com/mcp/faq"
       ],
       "oauth": {
         "authorizationUrl": "https://votre-domaine.com/oauth/authorize",
         "tokenUrl": "https://votre-domaine.com/oauth/token",
         "clientId": "le_client_id",
-        "clientSecret": "le_secret_plaintext",
+        "clientSecret": "VOTRE_CLIENT_SECRET",
         "scopes": ["*"]
       }
     }
@@ -163,7 +163,7 @@ Vous devriez recevoir :
 ### Tester le serveur MCP protégé
 
 ```bash
-curl http://localhost:8000/mcp/faq/admin \
+curl http://localhost:8000/mcp/faq \
   -H "Authorization: Bearer VOTRE_ACCESS_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -177,7 +177,7 @@ curl http://localhost:8000/mcp/faq/admin \
 
 ### Le tool create_faq n'apparaît pas
 
-- Vérifiez que vous utilisez `/mcp/faq/admin` (pas `/mcp/faq`)
+- Vérifiez que vous utilisez `/mcp/faq` (pas `/mcp/faq`)
 - Vérifiez que l'OAuth est configuré dans Claude Desktop
 - Vérifiez que vous êtes bien authentifié
 

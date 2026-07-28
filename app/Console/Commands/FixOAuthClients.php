@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class FixOAuthClients extends Command
 {
     protected $signature = 'mcp:fix-oauth-clients';
+
     protected $description = 'Repare les clients OAuth avec des donnees JSON corrompues (double-encodage)';
 
     public function handle()
@@ -28,7 +29,7 @@ class FixOAuthClients extends Command
                     $properValue = json_decode($decoded, true);
                     if (is_array($properValue)) {
                         $updates['redirect_uris'] = json_encode($properValue);
-                        $this->line("  - redirect_uris corrige: " . $updates['redirect_uris']);
+                        $this->line('  - redirect_uris corrige: '.$updates['redirect_uris']);
                     }
                 }
             }
@@ -40,12 +41,12 @@ class FixOAuthClients extends Command
                     $properValue = json_decode($decoded, true);
                     if (is_array($properValue)) {
                         $updates['grant_types'] = json_encode($properValue);
-                        $this->line("  - grant_types corrige: " . $updates['grant_types']);
+                        $this->line('  - grant_types corrige: '.$updates['grant_types']);
                     }
                 }
             }
 
-            if (!empty($updates)) {
+            if (! empty($updates)) {
                 DB::table('oauth_clients')
                     ->where('id', $client->id)
                     ->update($updates);

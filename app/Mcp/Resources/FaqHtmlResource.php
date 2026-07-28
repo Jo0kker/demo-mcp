@@ -83,7 +83,7 @@ class FaqHtmlResource extends Resource
             }
         }
 
-        $html .= <<<HTML
+        $html .= <<<'HTML'
 
             <hr>
             <footer style="text-align: center; color: #9ca3af; font-size: 0.9em;">

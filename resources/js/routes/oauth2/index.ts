@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 export const authorize = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ authorize.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 authorize.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ authorize.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 authorize.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -31,7 +31,7 @@ authorize.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 authorize.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -40,7 +40,7 @@ authorize.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 const authorizeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -49,7 +49,7 @@ const authorizeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 })
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 authorizeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -58,7 +58,7 @@ authorizeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 })
 
 /**
-* @see routes/ai.php:13
+* @see routes/ai.php:9
 * @route '/oauth2/authorize'
 */
 authorizeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -74,7 +74,7 @@ authorizeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 authorize.form = authorizeForm
 
 /**
-* @see routes/ai.php:20
+* @see routes/ai.php:16
 * @route '/oauth2/token'
 */
 export const token = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -88,7 +88,7 @@ token.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see routes/ai.php:20
+* @see routes/ai.php:16
 * @route '/oauth2/token'
 */
 token.url = (options?: RouteQueryOptions) => {
@@ -96,7 +96,7 @@ token.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/ai.php:20
+* @see routes/ai.php:16
 * @route '/oauth2/token'
 */
 token.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -105,7 +105,7 @@ token.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see routes/ai.php:20
+* @see routes/ai.php:16
 * @route '/oauth2/token'
 */
 const tokenForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -114,7 +114,7 @@ const tokenForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 })
 
 /**
-* @see routes/ai.php:20
+* @see routes/ai.php:16
 * @route '/oauth2/token'
 */
 tokenForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -45,7 +45,7 @@ class SearchFaqsTool extends Tool
         if ($search = $request->string('query')) {
             $query->where(function ($q) use ($search) {
                 $q->where('question', 'like', "%{$search}%")
-                  ->orWhere('answer', 'like', "%{$search}%");
+                    ->orWhere('answer', 'like', "%{$search}%");
             });
         }
 

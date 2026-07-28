@@ -8,6 +8,7 @@ Mcp::oauthRoutes();
 
 Route::get('/oauth2/authorize', function () {
     request()->merge(request()->query());
+
     return app()->handle(
         request()->create('/oauth/authorize', 'GET', request()->all())
     );

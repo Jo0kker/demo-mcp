@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 
 class SetupMcpOAuth extends Command
@@ -31,13 +31,14 @@ class SetupMcpOAuth extends Command
         $this->newLine();
 
         // Vérifier si des credentials existent déjà dans le .env
-        if (config('services.mcp.client_id') && !$this->option('force')) {
+        if (config('services.mcp.client_id') && ! $this->option('force')) {
             $this->warn('⚠️  Des credentials OAuth MCP existent déjà dans le .env !');
-            $this->info('Client ID: ' . config('services.mcp.client_id'));
+            $this->info('Client ID: '.config('services.mcp.client_id'));
             $this->newLine();
 
-            if (!$this->confirm('Voulez-vous en créer de nouveaux ?', false)) {
+            if (! $this->confirm('Voulez-vous en créer de nouveaux ?', false)) {
                 $this->info('✅ Configuration annulée');
+
                 return Command::SUCCESS;
             }
         }
@@ -47,10 +48,10 @@ class SetupMcpOAuth extends Command
         $this->newLine();
 
         // Générer le secret plaintext
-        $plaintextSecret = \Illuminate\Support\Str::random(40);
+        $plaintextSecret = Str::random(40);
 
         // Créer le client directement avec le secret plaintext
-        $client = new Client();
+        $client = new Client;
         $client->name = 'MCP OAuth Client';
         $client->secret = $plaintextSecret; // Passport hash automatiquement via l'accessor
         $client->provider = 'users';
@@ -89,8 +90,9 @@ class SetupMcpOAuth extends Command
     {
         $envPath = base_path('.env');
 
-        if (!file_exists($envPath)) {
+        if (! file_exists($envPath)) {
             $this->error('❌ Fichier .env non trouvé !');
+
             return;
         }
 
@@ -100,22 +102,22 @@ class SetupMcpOAuth extends Command
         if (str_contains($envContent, 'MCP_OAUTH_CLIENT_ID=')) {
             $envContent = preg_replace(
                 '/MCP_OAUTH_CLIENT_ID=.*/',
-                'MCP_OAUTH_CLIENT_ID=' . $clientId,
+                'MCP_OAUTH_CLIENT_ID='.$clientId,
                 $envContent
             );
         } else {
-            $envContent .= "\n# MCP OAuth Configuration\nMCP_OAUTH_CLIENT_ID=" . $clientId . "\n";
+            $envContent .= "\n# MCP OAuth Configuration\nMCP_OAUTH_CLIENT_ID=".$clientId."\n";
         }
 
         // Ajouter ou mettre à jour MCP_OAUTH_CLIENT_SECRET (PLAINTEXT pour Claude Desktop)
         if (str_contains($envContent, 'MCP_OAUTH_CLIENT_SECRET=')) {
             $envContent = preg_replace(
                 '/MCP_OAUTH_CLIENT_SECRET=.*/',
-                'MCP_OAUTH_CLIENT_SECRET=' . $plaintextSecret,
+                'MCP_OAUTH_CLIENT_SECRET='.$plaintextSecret,
                 $envContent
             );
         } else {
-            $envContent .= "MCP_OAUTH_CLIENT_SECRET=" . $plaintextSecret . "\n";
+            $envContent .= 'MCP_OAUTH_CLIENT_SECRET='.$plaintextSecret."\n";
         }
 
         file_put_contents($envPath, $envContent);
@@ -127,7 +129,7 @@ class SetupMcpOAuth extends Command
     /**
      * Affiche la configuration pour Claude Desktop
      */
-    protected function displayClaudeConfig(Client $client, string $plaintextSecret = null): void
+    protected function displayClaudeConfig(Client $client, ?string $plaintextSecret = null): void
     {
         $appUrl = config('app.url');
 
@@ -143,17 +145,17 @@ class SetupMcpOAuth extends Command
                     'command' => 'npx',
                     'args' => [
                         '@modelcontextprotocol/server-http',
-                        $appUrl . '/mcp/faq/admin'
+                        $appUrl.'/mcp/faq',
                     ],
                     'oauth' => [
-                        'authorizationUrl' => $appUrl . '/oauth/authorize',
-                        'tokenUrl' => $appUrl . '/oauth/token',
+                        'authorizationUrl' => $appUrl.'/oauth/authorize',
+                        'tokenUrl' => $appUrl.'/oauth/token',
                         'clientId' => $client->id,
                         'clientSecret' => $secret,
-                        'scopes' => ['*']
-                    ]
-                ]
-            ]
+                        'scopes' => ['*'],
+                    ],
+                ],
+            ],
         ];
 
         $this->line(json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));

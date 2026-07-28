@@ -34,7 +34,7 @@ class FaqListResource extends Resource
             ->groupBy('category');
 
         $content = "# Base de connaissances FAQ\n\n";
-        $content .= "Total de FAQs: " . Faq::published()->count() . "\n\n";
+        $content .= 'Total de FAQs: '.Faq::published()->count()."\n\n";
 
         foreach ($faqs as $category => $categoryFaqs) {
             $categoryName = $category ?: 'Sans catégorie';

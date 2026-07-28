@@ -1,7 +1,9 @@
 <?php
 
-test('returns a successful response', function () {
+test('redirects the home page to the public FAQ list', function () {
     $response = $this->get(route('home'));
 
-    $response->assertStatus(200);
+    $response->assertRedirect(route('faqs.index'));
+
+    $this->get(route('faqs.index'))->assertOk();
 });

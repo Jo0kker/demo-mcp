@@ -22,7 +22,7 @@ class FaqController extends Controller
         if ($search = $request->get('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('question', 'like', "%{$search}%")
-                  ->orWhere('answer', 'like', "%{$search}%");
+                    ->orWhere('answer', 'like', "%{$search}%");
             });
         }
 
@@ -44,7 +44,7 @@ class FaqController extends Controller
      */
     public function show(Faq $faq)
     {
-        if (!$faq->is_published) {
+        if (! $faq->is_published) {
             abort(404);
         }
 

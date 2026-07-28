@@ -5,7 +5,7 @@
 ```bash
 # 1. Installer les dépendances
 composer install
-npm install
+yarn install --frozen-lockfile
 
 # 2. Configurer l'environnement
 cp .env.example .env
@@ -15,7 +15,7 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 
 # 4. Compiler les assets (optionnel pour le web)
-npm run build
+yarn build
 ```
 
 ## ✅ Tester le serveur MCP

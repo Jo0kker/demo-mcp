@@ -138,7 +138,7 @@ EOF
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-http",
-        "$APP_URL/mcp/faq/admin"
+        "$APP_URL/mcp/faq"
       ],
       "oauth": {
         "authorizationUrl": "$APP_URL/oauth/authorize",
@@ -178,7 +178,7 @@ EOF
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-http",
-        "$APP_URL/mcp/faq/admin"
+        "$APP_URL/mcp/faq"
       ],
       "oauth": {
         "authorizationUrl": "$APP_URL/oauth/authorize",

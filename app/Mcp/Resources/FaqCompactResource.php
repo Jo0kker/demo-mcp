@@ -34,7 +34,7 @@ class FaqCompactResource extends Resource
             ->groupBy('category');
 
         $content = "=== BASE DE CONNAISSANCES FAQ ===\n";
-        $content .= "Total: " . Faq::published()->count() . " FAQs\n\n";
+        $content .= 'Total: '.Faq::published()->count()." FAQs\n\n";
 
         foreach ($faqs as $category => $categoryFaqs) {
             $categoryName = $category ?: 'GÉNÉRAL';
@@ -42,7 +42,7 @@ class FaqCompactResource extends Resource
 
             foreach ($categoryFaqs as $faq) {
                 $content .= "Q: {$faq->question}\n";
-                $content .= "R: " . str_replace("\n", " ", $faq->answer) . "\n";
+                $content .= 'R: '.str_replace("\n", ' ', $faq->answer)."\n";
                 $content .= "({$faq->view_count} vues)\n\n";
             }
         }

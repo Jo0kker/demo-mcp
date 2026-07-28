@@ -2,6 +2,7 @@
 
 namespace App\Mcp\Prompts;
 
+use Illuminate\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Prompt;
@@ -26,7 +27,7 @@ class AnalyzeKnowledgeBasePrompt extends Prompt
                 'role' => 'user',
                 'content' => [
                     'type' => 'text',
-                    'text' => <<<TEXT
+                    'text' => <<<'TEXT'
                     Effectue une analyse complète de notre base de connaissances FAQ.
 
                     Tâches à accomplir :
@@ -72,9 +73,9 @@ class AnalyzeKnowledgeBasePrompt extends Prompt
     /**
      * Get the prompt's input schema.
      *
-     * @return array<string, \Illuminate\JsonSchema\JsonSchema>
+     * @return array<string, JsonSchema>
      */
-    public function schema(\Illuminate\JsonSchema\JsonSchema $schema): array
+    public function schema(JsonSchema $schema): array
     {
         return [
             // Pas de paramètres requis pour ce prompt

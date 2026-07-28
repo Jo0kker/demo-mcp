@@ -27,7 +27,7 @@ class SuggestFaqPrompt extends Prompt
 
         $createInstruction = $createIfApproved
             ? "Si l'utilisateur approuve une suggestion, utilise l'outil `create_faq` pour l'ajouter à la base de connaissances."
-            : "Présente les suggestions sans les créer automatiquement.";
+            : 'Présente les suggestions sans les créer automatiquement.';
 
         $messages = [
             [
@@ -70,7 +70,7 @@ class SuggestFaqPrompt extends Prompt
     /**
      * Get the prompt's input schema.
      *
-     * @return array<string, \Illuminate\JsonSchema\JsonSchema>
+     * @return array<string, JsonSchema>
      */
     public function schema(JsonSchema $schema): array
     {

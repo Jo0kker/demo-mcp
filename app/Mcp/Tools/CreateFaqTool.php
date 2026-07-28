@@ -48,7 +48,7 @@ class CreateFaqTool extends Tool
             || Auth::guard('sanctum')->check()
             || Auth::guard('api')->check();
 
-        if (!$authenticated) {
+        if (! $authenticated) {
             return Response::error(
                 '🔒 Authentication required: This tool requires authentication. Use OAuth or provide a Personal Access Token.',
                 'AUTHENTICATION_REQUIRED'
@@ -65,7 +65,7 @@ class CreateFaqTool extends Tool
 
         if ($validator->fails()) {
             return Response::error(
-                'Validation failed: ' . $validator->errors()->first()
+                'Validation failed: '.$validator->errors()->first()
             );
         }
 

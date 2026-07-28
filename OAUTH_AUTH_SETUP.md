@@ -10,7 +10,7 @@ Votre serveur MCP FAQ dispose maintenant de **deux modes d'accès** :
 - ✅ Resources disponibles : `faqs://all`
 - ❌ Tool `create_faq` **NON disponible** (masqué via `shouldRegister()`)
 
-### 2. Mode ADMIN (`/mcp/faq/admin`)
+### 2. Mode ADMIN (`/mcp/faq`)
 - 🔐 Nécessite authentification OAuth 2.1
 - ✅ Tous les tools disponibles : `search_faqs`, `get_faq_categories`, `create_faq`
 - ✅ Toutes les resources disponibles
@@ -44,7 +44,7 @@ Mcp::oauthRoutes();
 Mcp::web('/mcp/faq', FaqServer::class);
 
 // Serveur admin - avec OAuth
-Mcp::web('/mcp/faq/admin', FaqServer::class)
+Mcp::web('/mcp/faq', FaqServer::class)
     ->middleware(['auth:api']);
 ```
 
@@ -100,7 +100,7 @@ Mcp::web('/mcp/faq/admin', FaqServer::class)
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-http",
-        "http://votre-domaine.com/mcp/faq/admin"
+        "http://votre-domaine.com/mcp/faq"
       ],
       "oauth": {
         "authorizationUrl": "http://votre-domaine.com/oauth/authorize",
@@ -179,7 +179,7 @@ curl -X POST http://localhost:8000/oauth/token \
 
 ```bash
 # Appeler le serveur MCP admin avec le token
-curl http://localhost:8000/mcp/faq/admin \
+curl http://localhost:8000/mcp/faq \
   -H "Authorization: Bearer VOTRE_ACCESS_TOKEN" \
   -H "Content-Type: application/json"
 ```
@@ -245,13 +245,13 @@ Passport::refreshTokensExpireIn(now()->addDays(30));
 
 ### Scénario 2 : Assistant admin
 - Utilisateur : Agent support
-- URL : `/mcp/faq/admin`
+- URL : `/mcp/faq`
 - Peut : Consulter ET créer des FAQs
 - Auth : OAuth automatique via Claude Desktop
 
 ### Scénario 3 : Integration n8n (à venir)
 - Système : Automatisation n8n
-- URL : `/mcp/faq/admin`
+- URL : `/mcp/faq`
 - Auth : Token OAuth stocké dans n8n
 - Peut : Créer des FAQs automatiquement depuis emails/tickets
 

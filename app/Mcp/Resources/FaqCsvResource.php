@@ -57,6 +57,7 @@ class FaqCsvResource extends Resource
         if (str_contains($value, ',') || str_contains($value, '"') || str_contains($value, "\n")) {
             // Échapper les guillemets en les doublant
             $value = str_replace('"', '""', $value);
+
             return "\"{$value}\"";
         }
 

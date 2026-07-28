@@ -13,6 +13,7 @@ Ce projet démontre comment utiliser Laravel MCP pour créer un serveur qui expo
 
 - **Backend** : Laravel 12
 - **Frontend** : Vue.js 3 + Inertia.js
+- **Runtime** : PHP 8.4 + Node.js 22
 - **Base de données** : SQLite
 - **MCP** : Laravel MCP (`laravel/mcp`)
 
@@ -24,8 +25,8 @@ Ce projet démontre comment utiliser Laravel MCP pour créer un serveur qui expo
 # Installer les dépendances PHP
 composer install
 
-# Installer les dépendances NPM
-npm install
+# Installer les dépendances frontend
+yarn install --frozen-lockfile
 
 # Copier le fichier .env
 cp .env.example .env

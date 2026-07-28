@@ -11,6 +11,8 @@ nixPkgs = [
 
 [phases.build]
 cmds = [
+    # Éviter que Wayfinder génère ses fichiers depuis un cache de routes obsolète
+    "php artisan route:clear",
     # Build des assets frontend avec Vite
     "yarn build"
 ]

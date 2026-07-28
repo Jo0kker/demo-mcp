@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\FaqController;
+use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return redirect()->route('faqs.index');
@@ -17,11 +17,11 @@ Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faqs.show');
 // Routes Dashboard protégées
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        $totalFaqs = \App\Models\Faq::count();
-        $publishedFaqs = \App\Models\Faq::published()->count();
-        $totalViews = \App\Models\Faq::sum('view_count');
-        $recentFaqs = \App\Models\Faq::orderBy('created_at', 'desc')->limit(5)->get();
-        $topFaqs = \App\Models\Faq::published()->orderBy('view_count', 'desc')->limit(5)->get();
+        $totalFaqs = Faq::count();
+        $publishedFaqs = Faq::published()->count();
+        $totalViews = Faq::sum('view_count');
+        $recentFaqs = Faq::orderBy('created_at', 'desc')->limit(5)->get();
+        $topFaqs = Faq::published()->orderBy('view_count', 'desc')->limit(5)->get();
 
         return Inertia::render('Dashboard', [
             'stats' => [
